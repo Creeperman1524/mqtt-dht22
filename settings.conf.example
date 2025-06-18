@@ -1,0 +1,21 @@
+[mqtt]
+# The IP address of the MQTT broker
+broker = 
+
+# Authentication for the MQTT broker
+# Leave both empty if your broker does not require authentication
+user = 
+password = 
+
+# A unique identifier for this MQTT device
+clientid = rpi-dht22
+
+# The topic paths for the various script implementation
+temp_topic = stat/dht22/temperature
+hum_topic = stat/dht22/humidity
+
+# The discovery prefix to use for auto Home Assistant configuration
+discovery_prefix = homeassistant
+
+# A JSON object to be passed along with the discovery message for auto Home Assistant configuration
+device = {}
