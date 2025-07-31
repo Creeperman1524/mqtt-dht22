@@ -57,7 +57,7 @@ class MQTTControl:
         payload_temp = str(self.sensor.temperature)
         payload_humidity = str(self.sensor.humidity)
 
-        print(f"Publishiong temp: {payload_temp}, hum: {payload_humidity}")
+        print(f"Publishing temp: {payload_temp}, hum: {payload_humidity}")
         client.publish(self._mqtt_temp_topic, payload_temp, 0, False)
         client.publish(self._mqtt_hum_topic, payload_humidity, 0, False)
 
