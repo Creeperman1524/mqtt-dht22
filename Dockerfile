@@ -1,8 +1,8 @@
-FROM python:3.9-slim
+FROM python:3.9-slim-bullseye AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /app
+WORKDIR /builder
 
 RUN apt-get update && apt-get install -y \
     gcc \
@@ -13,7 +13,21 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install paho-mqtt adafruit-circuitpython-dht RPI.GPIO
+RUN pip install --target=/install --no-cache-dir \
+	paho-mqtt \
+	adafruit-circuitpython-dht \
+	RPI.GPIO
+
+FROM python:3.9-slim-bullseye
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	libgpiod2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /install /app
 
 ADD dht22.py .
 
